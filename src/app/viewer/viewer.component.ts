@@ -7,7 +7,7 @@ import { environment } from 'src/environments/environment';
 import { Component, OnInit } from '@angular/core';
 import { assert } from '@itwin/core-bentley';
 import {
-    BentleyCloudRpcManager, IModelReadRpcInterface, IModelTileRpcInterface
+  BentleyCloudRpcManager, IModelReadRpcInterface, IModelTileRpcInterface
 } from '@itwin/core-common';
 import { IModelApp } from '@itwin/core-frontend';
 import { FrontendIModelsAccess } from '@itwin/imodels-access-frontend';
@@ -83,6 +83,10 @@ export class ViewerComponent implements OnInit {
         this.selectionLoggerService.onSelectionChanged(viewportProps.imodelConnection, evt);
       });
     }
+  }
+
+  signOut(): void {
+    this.authService.signOut();
   }
 
 }

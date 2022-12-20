@@ -1,9 +1,5 @@
 <div class="root">
-  <div
-    appViewport
-    class="viewer-viewport"
-    *ngIf="initialized"
-    [viewportId]="viewportId"
-    (initialized)="doSomethingToViewport($event)"
-  ></div>
+  <div appViewport class="viewer-viewport" *ngIf="initialized" [viewportId]="viewportId"
+    (initialized)="doSomethingToViewport($event)"></div>
 </div>
+<button class="sign-out" (click)="signOut()">Sign Out</button>

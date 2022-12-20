@@ -5,12 +5,17 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 
-const routes: Routes = [{
-    path: '', loadChildren: () => import('./login/login.module').then(m => m.LoginModule)
-  },
+const routes: Routes = [
+  // {
+  //   path: '', loadChildren: () => import('./login/login.module').then(m => m.LoginModule)
+  // },
   {
     path: 'viewer', loadChildren: () => import('./viewer/viewer.module').then(m => m.ViewerModule)
   },
+  {
+    path: 'auth', loadChildren: () => import('./auth/auth.module').then(m => m.AuthModule)
+  },
+  { path: '**', redirectTo: 'viewer', pathMatch: 'full' },
 ];
 
 @NgModule({

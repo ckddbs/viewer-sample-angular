@@ -6,8 +6,8 @@ import { environment } from 'src/environments/environment';
 
 import { Injectable } from '@angular/core';
 import {
-    BrowserAuthorizationCallbackHandler, BrowserAuthorizationClient,
-    BrowserAuthorizationClientConfiguration
+  BrowserAuthorizationCallbackHandler, BrowserAuthorizationClient,
+  BrowserAuthorizationClientConfiguration
 } from '@itwin/browser-authorization';
 
 @Injectable({
@@ -27,8 +27,18 @@ export class AuthorizationService {
       this._config.redirectUri
     );
     return new Promise<boolean>((resolve, reject) => {
-      this._client.onAccessTokenChanged.addOnce((token: string) => resolve(token !== ""));
-      this._client.signIn().catch((err) => reject(err));
+      this._client.onAccessTokenChanged.addOnce((token: string) => {
+        console.log('signin-hasSignedIn', this._client.hasSignedIn);
+        console.log('signin-hasExpired', this._client.hasExpired);
+        console.log('signin-token', token.length, token);
+        resolve(token !== "");
+      });
+      // this._client.signIn()
+      this._client.signInPopup()
+        .catch((err) => {
+          console.error('signin-error', err);
+          reject(err);
+        });
     });
   }
 
@@ -38,6 +48,10 @@ export class AuthorizationService {
 
   public get signedIn() {
     return this._client.hasSignedIn;
+  }
+
+  signOut(): Promise<void> {
+    return this._client.signOut();
   }
 
 }

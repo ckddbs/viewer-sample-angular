@@ -9,7 +9,7 @@ export const environment = {
     clientId: "spa-f0Hb4QF3pQMrmy7iCOs0YQWh1",
     scope: "imodelaccess:read imodels:read realitydata:read",
     redirectUri: "http://localhost:3000/auth",
-    // postSignoutRedirectUri: "http://localhost:3000",
+    postSignoutRedirectUri: "http://localhost:3000",
     responseType: "code",
     authority: "https://ims.bentley.com"
   },
