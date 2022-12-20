@@ -7,7 +7,7 @@ import { environment } from 'src/environments/environment';
 import { Directive, ElementRef, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { assert } from '@itwin/core-bentley';
 import {
-    CheckpointConnection, IModelApp, IModelConnection, ScreenViewport, ViewCreator3d
+  CheckpointConnection, IModelApp, IModelConnection, ScreenViewport, ViewCreator3d
 } from '@itwin/core-frontend';
 
 import type { ViewportProps } from '@shared/types/viewport-props';
@@ -54,7 +54,7 @@ export class ViewportDirective implements OnInit {
     assert(IModelApp.initialized, "IModelApp.startup() must be called before a viewport can be initialized");
     assert(!!iTwinId, "No iTwinId provided.");
     assert(!!iModelId, "No iModelId provided.");
-  
+
     const iModelConnection = await CheckpointConnection.openRemote(
       iTwinId,
       iModelId,
@@ -66,10 +66,18 @@ export class ViewportDirective implements OnInit {
       const vp = ScreenViewport.create(this._viewportDiv, viewState);
       IModelApp.viewManager.addViewport(vp);
       this._iModelConnection = iModelConnection;
-      this.initialized.emit({ 
+      this.initialized.emit({
         imodelConnection: iModelConnection,
         viewportDiv: this._viewportDiv,
         viewportId: this.viewportId
+      });
+
+      // pring cam position
+      vp.onViewChanged.addListener(_vp => {
+        if (_vp.view.isSpatialView()) {
+          const p = _vp.view.camera.getEyePoint();
+          console.log('cam', p.x.toFixed(3), p.y.toFixed(3), p.z.toFixed(3));
+        }
       });
     }
   }
